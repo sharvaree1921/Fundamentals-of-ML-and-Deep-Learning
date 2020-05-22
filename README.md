@@ -88,16 +88,57 @@ First we **pass the data** as input to the neural network via **forward propagat
 For ex-we have 4 output ranges and for a certain input we have highest activation for 2nd output.So,what the neural network does is minimization of loss,i.e.maximize the activation for 2nd and minimize the activation for 1st,3rd and 4th.So,to do this the network has to update the weights for just previous connections.But it can't,since the values of weights are dependent upon the activation of just previous neurons of layer.Similarly,these values are dependent on their previous connections and node values.
 Hence,we understood that how the SGD seeks the help of n-1,n-2,n-3,...3,2,1 layers and its in-between connections to update the values of weights in order to reduce the loss function.Hence,we say that the process is taking place in backward direction.Hence,said to be backpropagation.
 
+[Backpropagation-Intution](https://www.youtube.com/watch?v=XE3krf3CQls&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=23)
+
 **Mathematical Notations-**
+[Backpropagation-Mathematical Notations](https://www.youtube.com/watch?v=2mSysRx-1c0&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=24)
 
+**Mathematical Observations-**
+[Backpropagation-mathematical Observations](https://www.youtube.com/watch?v=G5b4jRBKNxw&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=25)
 
+**Calculating the Gradient-**
+[Backpropagation-calculating the Gradient](https://www.youtube.com/watch?v=Zr5viAZGndE&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=26)
 
+**What puts the 'back' in the backprop?**
+[Backpropagation-What puts the 'back' in the backprop](https://www.youtube.com/watch?v=xClK__CqZnQ&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=27)
 
+## Vanishing and Exploding the Gradient-
+**A problem resulting from backpropagation**
+Vanishing and Exploding the gradient are the problems which arise during the training of the network.
 
+While updating weights of initial layers during backpropagation,the weights hardly get change from its original value.Recall that the weights are updated by new_weight=old_weight-calculated term.Here,the calculated term is d(loss)/d(weight)x(learning rate).The gradient mentioned in the calculated term basically depends on whole rest of the remainder neural network and hence by chain rule,it is gradient=a*b*c*d*e*... so if the values a,b,c,...are small(meaning less than 1)then the gradient will be smaller than that.Also,by multiplying by learning rate,makes it even smaller,like vanishingly smaller.Hence,named vanishing gradient.So,the subtracted term is not as significant as it should have been.This makes hardly any change in the updated weight which is a problem,as we want our updated weight to be more close towards ideal value after each backpropagation. 
 
+Also,when a,b,c,...are large values(meaning greater than 1)then the updated weight would have the value far more than what is expected.This is called Exploding of the Gradient problem.
 
+## Weights Initialization-
+At starting,weights are initialized randomly.This random distribution of weights is done by mean=0 and variance=1.
+Let's say,for example,we have 250 input neurons each having value as 1 and they have their corresponding weights associated with each next layer connection.These connections would have mean=0 and and a standard deviation of 1.The input to the layer which is z will have variance as 250(i.e.1+1+...+1)For more details about how this is derived,do watch [Weights initialization](https://www.youtube.com/watch?v=8krd5qKVw-Q&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=29).But we wanted the variance to be 1.So,in order to reduce the variance,we multiply it by a factor of (2/n)^(1/2).This method is called **Xavier initiallization** which has main aim to reduce vanishing and exploding gradient problem.
+So,weight initialization has a powerful impact on how well and how fast our neural network works.
 
+## Bias in Artificial Neural Network-
+**How bias affects the ANN**
+Each neuron has its bias as each connection has its weight.Just like SGD updates the values of weights,it also update the values of biases.Biases act as a threshold for each neuron and indicates how much the neuron needs to be activated.Addition of biases increases flexibility of model to fit the given data.Instead of just passing the weighted sum to the actiivation function,we pass the weighted sum plus the bias.
 
+Let's consider an example.Suppose we have 2 input neurons and one output neuron.Let the values of each input neurons be 1 an 2 with random weights say -0.55 and 0.1.As previously discussed,we use method of activation as 'Relu' which tells that the values less than or equal to zero are interpretted as 0 and those greater than 0 are interpreted as it is.So,the weighted sum is 1*(-0.55)+2* 0.1= -0.35 < 0 .Hence value=0,i.e.the output neuron is not activated.Means,here '0' acts as a threshold.But,what if our neural network demands for its activeness,what if we want to change its threshold value.Here comes the role of bias.We can change this by just adding a positive no. say 1,so that the output would be (-0.35+1)=0.65 which turns out to be activated.
 
+Just like weights are learnable parameters,so are the biases.We can't decide them by ourselves.However,the model learns from the training dataset and thus can update weights and biases accordingly.Thus,addition of biasing gives model more control in updating the values.
 
+## Learnable Parametres-
+Any parameters that the model learns from training(rather say SGD) are called learnable parameters.No. of learnable parameters are inputs x outputs + biases for each 'dense' layer.We can sum up this values for getting total no. of learnable parameters in a network.
+However,this logic doesn't apply to CNNs as the CNN's layers has filters associated with it.It depends on the no. of filters associated and how big is the size of a kernel.Hence,modification in the formula for no. of Learnable parameters is required.
+The formula for learnable parametres is mentioned [here](https://www.youtube.com/watch?v=gmBfb6LNnZs&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=32)
+
+## Regularization in Neural Network-
+Regularization is the method to reduce overfitting and or reduce variance in our model by penalizing the complexity of it.Regularization basically involves adding a term to the loss.There are various types of regulization techniques,the most used is **L2 Regularization**.To what Regularization actually does,do watch [this video](https://www.youtube.com/watch?v=iuJgyiS7BKM&list=PLZbbT5o_s2xq7LwI2y8_QtvuXZedL6tQU&index=33)
+
+## Batch-Size in Neural Network-
+Batch size is the no. of samples that will be passed through the network at one time(a.k.a mini-batch).Epoch is one single pass throuhout the network.Batch-size and epochs are not same.
+consider the example-Let's say we have 1000 images of cats and dogs and suppose batchsize=10,that means we have given input to 10 images at one time to the network.Hence,it will take 100 batches to make a single epoch.**Larger batches=Faster Training**.So,batch size is also a hyper parameter  that needs to be test and tuned with the model.
+
+## Fine Tuning in Neural Network-
+Fine Tuning is a way of applying or utilizing **Transfer Learning**.Transfer learning is nothing but training our model by already trained another set of model.For ex-transfer learning can be implemented in identifying trucks by using trained model of cars.In this,we don't have to build the model from scratch,rather just have to modify the previous model.
+
+## Batch Normalization-
+Suppose we have a dataset of no. of kms. travelled by cars in last 5 yrs.The range of this data set can vary from 100kms to 100,000 kms.So,we have wide range of data.Such wide range of data can cause instability in our network and cause innumerous problems like say exploding gradient.So,we scale down these quantities between zero and one('0' to '1').So,we need to normalize our data on the same scale.Okay,this is good but there may arise another problem evenafter normalizing the data.
+In every epoch,while updating weights and biases,what if one weight is drastically larger than other?this may cause unstability and hence **Batch normalization** comes into role. 
 
