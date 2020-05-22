@@ -70,7 +70,33 @@ First,we will discuss the overview of it.With each convolutional layer,it has so
 
 Consider the example of digit recognition of MNIST dataset.The filters associated with each convolutional network is decided by us.A filter is just basically a matrix which convolve(sliding by performing certain operations) throughout the image in specific order to give transformed matrix.Here,the convolutional operation is basically the dot product of kernal matrix with original image pixel values.So,basically filters are pattern detectors.More the complicated patterns,deeper the network and more complicated filters in the convolutional layer.
 
-## 
+## Zero Padding in CNN-
+When we convolve a 3x3 matrix over original image of 28x28 ,we get 26x26 sized image.This is because our convolutional matrix is restricted to slide only to some positions.Here,the output's dimension is less than that of original image,i.e.we can say that we have lost some data from the image.Suppose our neural network contains more such layers,then eventually our resultant image would have lost a huge amount of valuable data,which is a problem.Also,in case of image having small size,it would be meaningless after applying matrix over it.The problem is that the edges here are not being convolved as the interior portion is being done.Hence,Zero padding is used to overcome this problem.Basically,zero padding is method to preserve the dimensions of input.An extra layer of zero pixels is added to all four sides of original image so that the output image has same dimension as that of the input implying the valuable data is not lost.Sometimes,more than one layer is also added to the input image.
+There are two types of Padding-**valid padding** and **same padding**.When no padding is required in a convolutional layer,it is called valid and when padding is required to retain the dimensions,it is called 'same' padding.
+
+## Max Pooling in CNN-
+Max pooling is a method which is applied to image after it has undergone the convolutional operation,i.e.original image->convoluted image->max-pooled image.So,now we have convoluted image.Let's define the size and stride of the empty matrix to slide over the image,say 2x2 is the size and stride is 2.Stride is nothing but the pixels to be moved by the empty matrix after each max-pooled operation.Now,we have 26x26 dimensioned image.We slide the empty matrix(also called as pool) and pick out the max.pixel value from those 4 pixel values in the pool(4 since it is 2x2).Likewise carry out this same max.value operation over the intervals of 2 pixels and so we get the final output image of 13x13.Hence,called 'max-pooling'.
+
+The main aim of max-pooling is to reduce the computational load of the neural network.As the resolution is reduced by this method,the network can actually look at the larger areas of image at a timegoing forward,which reduces the parameters in the network and reduces the computational load.Also,max-pooling is useful for the problem of overfitting.
+
+## _Backpropagation_-
+Recall the concepts of Stochastic Gradient Descend,Loss function,etc.
+
+**Intution-**
+First we **pass the data** as input to the neural network via **forward propagation**.In this,we repeatedly pass on the data by calculating the weighted sum of previous layer activation output with the corresponding weights and passing this sum to next layer's activation function.We do this until we reach the output layer.And at this point we **calculate the loss**.That is the **Stochastic Gradient descend** minimizes the loss.SGD does this _by calculating the gradient of loss function and updating the weights_.To do the actual calculation of the gradient,SGD uses the method called as **Backpropagation**.There is Math behind all these scenes,Backprop uses calculus for all this.
+
+For ex-we have 4 output ranges and for a certain input we have highest activation for 2nd output.So,what the neural network does is minimization of loss,i.e.maximize the activation for 2nd and minimize the activation for 1st,3rd and 4th.So,to do this the network has to update the weights for just previous connections.But it can't,since the values of weights are dependent upon the activation of just previous neurons of layer.Similarly,these values are dependent on their previous connections and node values.
+Hence,we understood that how the SGD seeks the help of n-1,n-2,n-3,...3,2,1 layers and its in-between connections to update the values of weights in order to reduce the loss function.Hence,we say that the process is taking place in backward direction.Hence,said to be backpropagation.
+
+**Mathematical Notations-**
+
+
+
+
+
+
+
+
 
 
 
